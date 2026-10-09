@@ -1,0 +1,130 @@
+{
+  "schemaVersion": 1,
+  "personal": {
+    "surname": "EXAMPLE",
+    "givenNames": "EXAMPLE",
+    "dateOfBirth": "1990-05-21",
+    "sex": "Male",
+    "nationality": "Example option",
+    "placeOfBirth": "EXAMPLE",
+    "religion": "EXAMPLE",
+    "identityNumber": "EXAMPLE",
+    "email": "alex@example.invalid",
+    "hasOtherNationalities": true,
+    "otherNationalities": [
+      "Example nationality"
+    ],
+    "hasUsedOtherPassports": true,
+    "previousPassports": [
+      {
+        "number": "EXAMPLE",
+        "fullName": "EXAMPLE",
+        "dateOfBirth": "2025-01-10",
+        "nationality": "Example option"
+      }
+    ],
+    "hasViolations": true,
+    "violations": [
+      {
+        "act": "EXAMPLE",
+        "date": "2025-01-10",
+        "sanction": "EXAMPLE",
+        "authority": "EXAMPLE"
+      }
+    ]
+  },
+  "passport": {
+    "number": "EXAMPLE",
+    "type": "Example option",
+    "typeDetails": "EXAMPLE",
+    "placeOfIssue": "EXAMPLE",
+    "dateOfIssue": "2025-01-10",
+    "dateOfExpiry": "2030-06-15",
+    "hasOtherValidPassports": true,
+    "otherValidPassports": [
+      {
+        "type": "Example option",
+        "number": "EXAMPLE",
+        "placeOfIssue": "EXAMPLE",
+        "dateOfIssue": "2025-01-10",
+        "dateOfExpiry": "2030-06-15",
+        "typeDetails": "EXAMPLE"
+      }
+    ]
+  },
+  "visa": {
+    "entryType": "Single-entry",
+    "validFrom": "2025-01-10",
+    "validTo": "2025-02-01"
+  },
+  "contact": {
+    "permanentAddress": "EXAMPLE",
+    "mailingAddress": "EXAMPLE",
+    "phone": "+00123456789",
+    "emergency": {
+      "name": "EXAMPLE",
+      "phone": "+00123456789",
+      "relationship": "EXAMPLE",
+      "address": "EXAMPLE"
+    }
+  },
+  "occupation": {
+    "category": "Employee",
+    "description": "EXAMPLE",
+    "organization": "EXAMPLE",
+    "position": "EXAMPLE",
+    "address": "EXAMPLE",
+    "phone": "+00123456789"
+  },
+  "trip": {
+    "purpose": "Other",
+    "purposeDetails": "EXAMPLE",
+    "intendedEntryDate": "2025-01-10",
+    "durationDays": 30,
+    "entryCheckpoint": "Example option",
+    "exitCheckpoint": "Example option",
+    "address": "EXAMPLE",
+    "province": "Example option",
+    "ward": "Example option",
+    "phone": "+00123456789",
+    "hasVietnamContacts": true,
+    "vietnamContacts": [
+      {
+        "name": "EXAMPLE",
+        "phone": "+00123456789",
+        "address": "EXAMPLE",
+        "purpose": "EXAMPLE"
+      }
+    ],
+    "hasVisitedWithinLastYear": true,
+    "previousVisits": [
+      {
+        "from": "2025-01-10",
+        "to": "2025-02-01",
+        "purpose": "EXAMPLE"
+      }
+    ],
+    "hasRelativesInVietnam": true,
+    "relativesInVietnam": [
+      {
+        "fullName": "EXAMPLE",
+        "dateOfBirth": "2025-01-10",
+        "nationality": "Example option",
+        "relationship": "EXAMPLE",
+        "address": "EXAMPLE"
+      }
+    ]
+  },
+  "expenses": {
+    "estimatedAmount": 0,
+    "hasInsurance": true,
+    "insuranceDetails": "EXAMPLE",
+    "payer": "Company",
+    "paymentMethod": "Credit card",
+    "sponsor": {
+      "name": "EXAMPLE",
+      "address": "EXAMPLE",
+      "phone": "+00123456789"
+    }
+  }
+}

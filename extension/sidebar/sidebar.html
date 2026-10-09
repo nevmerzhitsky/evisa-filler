@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="ru">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Vietnam e-Visa Filler</title><link rel="stylesheet" href="sidebar.css"></head>
+<body>
+<main>
+<header><h1>Заполнение e-Visa</h1><div class="header-actions"><div class="help"><button class="icon-button" type="button" aria-label="Как пользоваться" aria-describedby="help-text">?</button><div id="help-text" class="tooltip" role="tooltip">Выберите JSON для английской анкеты на evisa.gov.vn. Фотографии необязательны: JPEG/PNG, от 10 КиБ до 2 МиБ. Выбор файла ещё не отправляет его сайту. После заполнения проверьте анкету. Переходы, отправку и оплату выполняйте самостоятельно.</div></div><button id="close" class="icon-button" type="button" aria-label="Закрыть панель" title="Закрыть панель">×</button></div></header>
+<section class="files" aria-label="Файлы анкеты">
+<div class="file-row"><label class="field-name" for="json">JSON</label><label class="picker" for="json"><input id="json" type="file" accept=".json,application/json" aria-label="Выбрать JSON анкеты" aria-describedby="json-status"><span id="json-name">Выбрать файл</span><span class="picker-icon" aria-hidden="true">…</span></label><p id="json-status" class="file-status"></p></div>
+<div class="file-row"><label class="field-name" for="portrait" title="Необязательно. JPEG/PNG, от 10 КиБ до 2 МиБ">Портрет</label><label class="picker" for="portrait"><input id="portrait" type="file" accept="image/jpeg,image/png" aria-label="Выбрать портрет, необязательно" aria-describedby="portrait-status"><span id="portrait-name">Выбрать файл</span><span class="picker-icon" aria-hidden="true">…</span></label><p id="portrait-status" class="file-status"></p></div>
+<div class="file-row"><label class="field-name" for="passport" title="Страница паспорта. Необязательно. JPEG/PNG, от 10 КиБ до 2 МиБ">Паспорт</label><label class="picker" for="passport"><input id="passport" type="file" accept="image/jpeg,image/png" aria-label="Выбрать страницу паспорта, необязательно" aria-describedby="passport-status"><span id="passport-name">Выбрать файл</span><span class="picker-icon" aria-hidden="true">…</span></label><p id="passport-status" class="file-status"></p></div>
+</section>
+<section class="state-card"><p id="state" role="status" aria-live="polite"></p><p id="target" class="hint">Целевая вкладка ещё не выбрана</p></section>
+<div id="actions" class="actions"><button id="start" class="primary" type="button">Заполнить анкету</button><button id="resume" class="primary" type="button" hidden>Продолжить</button><button id="stop" class="stop" type="button" hidden>Остановить</button><button id="clear" type="button" hidden title="Удалить файлы и отчёт из панели. Изменения на сайте остаются.">Очистить</button></div>
+<p id="result-summary" class="result-summary">Результатов пока нет</p>
+<details id="result-details" class="journal"><summary>Подробный журнал <span id="result-count" class="count">0</span></summary><div id="results"></div></details>
+<section class="export-section" aria-label="Сохранение текущей формы">
+<button id="export" type="button" title="Сохранить текущие значения полей на сайте">Сохранить форму в JSON</button>
+<p id="export-status" class="hint" role="status" aria-live="polite"></p>
+<details id="export-warnings" class="journal" hidden><summary>Предупреждения экспорта <span id="export-warning-count" class="count"></span></summary><ul id="export-warning-list"></ul></details>
+</section>
+</main><script type="module" src="sidebar.js"></script>
+</body></html>

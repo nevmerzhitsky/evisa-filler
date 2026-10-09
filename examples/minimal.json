@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "personal": {
+    "surname": "EXAMPLE",
+    "givenNames": "ALEX",
+    "dateOfBirth": "1990-05-21"
+  },
+  "passport": {
+    "number": "AB1234567",
+    "dateOfExpiry": "2030-06-15"
+  },
+  "trip": {
+    "previousVisits": [
+      {
+        "from": "2025-01-10",
+        "to": "2025-02-01",
+        "purpose": "Tourism"
+      }
+    ]
+  }
+}

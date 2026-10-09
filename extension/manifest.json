@@ -1,0 +1,12 @@
+{
+  "manifest_version": 3,
+  "name": "E-visa filler",
+  "version": "0.1.18",
+  "browser_specific_settings": {"gecko": {"id": "evisa-filler@local"}},
+  "description": "Локальное заполнение личной английской формы evisa.gov.vn",
+  "permissions": ["activeTab", "downloads"],
+  "host_permissions": ["https://evisa.gov.vn/*"],
+  "sidebar_action": {"default_title": "E-visa filler", "default_panel": "sidebar/sidebar.html"},
+  "content_scripts": [{"matches": ["https://evisa.gov.vn/*"], "js": ["content/bootstrap.js"], "run_at": "document_idle", "all_frames": false}],
+  "web_accessible_resources": [{"resources": ["content/*.js", "shared/*.js"], "matches": ["https://evisa.gov.vn/*"]}]
+}

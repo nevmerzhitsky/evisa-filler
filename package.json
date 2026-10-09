@@ -1,0 +1,11 @@
+{
+  "name": "evisa-filler",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test"
+  },
+  "devDependencies": {
+    "ajv": "^8.20.0"
+  }
+}

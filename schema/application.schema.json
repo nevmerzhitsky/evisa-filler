@@ -1,0 +1,1449 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Partial Vietnam e-Visa changes",
+  "description": "Raw JSON permits null and blank strings for optional values and empty arrays for unchanged lists. Calendar validity, cross-field date ordering  require extension/shared/validator.js; standard JSON Schema cannot compare field values. Choice strings are checked against the available English site options by the DOM adapter at runtime. Sponsor availability depends on the site payer choice and is checked by the adapter.",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "personal": {
+      "anyOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "string",
+          "pattern": "^\\s*$"
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "surname": {
+              "anyOf": [
+                {
+                  "type": "null"
+                },
+                {
+                  "type": "string",
+                  "pattern": "^\\s*$"
+                },
+                {
+                  "type": "string"
+                }
+              ]
+            },
+            "givenNames": {
+              "anyOf": [
+                {
+                  "type": "null"
+                },
+                {
+                  "type": "string",
+                  "pattern": "^\\s*$"
+                },
+                {
+                  "type": "string"
+                }
+              ]
+            },
+            "dateOfBirth": {
+              "anyOf": [
+                {
+                  "type": "null"
+                },
+                {
+                  "type": "string",
+                  "pattern": "^\\s*$"
+                },
+                {
+                  "type": "string",
+                  "pattern": "^\\s*\\d{4}-\\d{2}-\\d{2}\\s*$",
+                  "description": "Trimmed YYYY-MM-DD; actual calendar validity is checked by the runtime validator."
+                }
+              ]
+            },
+            "yearOfBirth": {
+              "anyOf": [
+                {
+                  "type": "null"
+                },
+                {
+                  "type": "string",
+                  "pattern": "^\\s*$"
+                },
+                {
+                  "type": "integer",
+                  "minimum": 1000,
+                  "maximum": 9999
+                }
+              ]
+            },
+            "sex": {
+              "anyOf": [
+                {
+                  "type": "null"
+                },
+                {
+                  "type": "string",
+                  "pattern": "^\\s*$"
+                },
+                {
+                  "type": "string"
+                }
+              ]
+            },
+            "nationality": {
+              "anyOf": [
+                {
+                  "type": "null"
+                },
+                {
+                  "type": "string",
+                  "pattern": "^\\s*$"
+                },
+                {
+                  "type": "string"
+                }
+              ]
+            },
+            "placeOfBirth": {
+              "anyOf": [
+                {
+                  "type": "null"
+                },
+                {
+                  "type": "string",
+                  "pattern": "^\\s*$"
+                },
+                {
+                  "type": "string"
+                }
+              ]
+            },
+            "religion": {
+              "anyOf": [
+                {
+                  "type": "null"
+                },
+                {
+                  "type": "string",
+                  "pattern": "^\\s*$"
+                },
+                {
+                  "type": "string"
+                }
+              ]
+            },
+            "identityNumber": {
+              "anyOf": [
+                {
+                  "type": "null"
+                },
+                {
+                  "type": "string",
+                  "pattern": "^\\s*$"
+                },
+                {
+                  "type": "string"
+                }
+              ]
+            },
+            "email": {
+              "anyOf": [
+                {
+                  "type": "null"
+                },
+                {
+                  "type": "string",
+                  "pattern": "^\\s*$"
+                },
+                {
+                  "type": "string"
+                }
+              ]
+            },
+            "hasOtherNationalities": {
+              "anyOf": [
+                {
+                  "type": "null"
+                },
+                {
+                  "type": "string",
+                  "pattern": "^\\s*$"
+                },
+                {
+                  "type": "boolean"
+                }
+              ]
+            },
+            "otherNationalities": {
+              "anyOf": [
+                {
+                  "type": "null"
+                },
+                {
+                  "type": "string",
+                  "pattern": "^\\s*$"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "pattern": "\\S"
+                  }
+                }
+              ]
+            },
+            "hasUsedOtherPassports": {
+              "anyOf": [
+                {
+                  "type": "null"
+                },
+                {
+                  "type": "string",
+                  "pattern": "^\\s*$"
+                },
+                {
+                  "type": "boolean"
+                }
+              ]
+            },
+            "previousPassports": {
+              "anyOf": [
+                {
+                  "type": "null"
+                },
+                {
+                  "type": "string",
+                  "pattern": "^\\s*$"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                      "number": {
+                        "type": "string",
+                        "pattern": "\\S"
+                      },
+                      "fullName": {
+                        "type": "string",
+                        "pattern": "\\S"
+                      },
+                      "dateOfBirth": {
+                        "type": "string",
+                        "pattern": "^\\s*\\d{4}-\\d{2}-\\d{2}\\s*$",
+                        "description": "Trimmed YYYY-MM-DD; actual calendar validity is checked by the runtime validator."
+                      },
+                      "nationality": {
+                        "type": "string",
+                        "pattern": "\\S"
+                      }
+                    },
+                    "required": [
+                      "number",
+                      "fullName",
+                      "dateOfBirth",
+                      "nationality"
+                    ]
+                  }
+                }
+              ]
+            },
+            "hasViolations": {
+              "anyOf": [
+                {
+                  "type": "null"
+                },
+                {
+                  "type": "string",
+                  "pattern": "^\\s*$"
+                },
+                {
+                  "type": "boolean"
+                }
+              ]
+            },
+            "violations": {
+              "anyOf": [
+                {
+                  "type": "null"
+                },
+                {
+                  "type": "string",
+                  "pattern": "^\\s*$"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                      "act": {
+                        "type": "string",
+                        "pattern": "\\S"
+                      },
+                      "date": {
+                        "type": "string",
+                        "pattern": "^\\s*\\d{4}-\\d{2}-\\d{2}\\s*$",
+                        "description": "Trimmed YYYY-MM-DD; actual calendar validity is checked by the runtime validator."
+                      },
+                      "sanction": {
+                        "type": "string",
+                        "pattern": "\\S"
+                      },
+                      "authority": {
+                        "type": "string",
+                        "pattern": "\\S"
+                      }
+                    },
+                    "required": [
+                      "act",
+                      "date",
+                      "sanction",
+                      "authority"
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "allOf": [
+            {
+              "not": {
+                "required": [
+                  "otherNationalities",
+                  "hasOtherNationalities"
+                ],
+                "properties": {
+                  "otherNationalities": {
+                    "type": "array",
+                    "minItems": 1
+                  },
+                  "hasOtherNationalities": {
+                    "const": false
+                  }
+                }
+              }
+            },
+            {
+              "not": {
+                "required": [
+                  "previousPassports",
+                  "hasUsedOtherPassports"
+                ],
+                "properties": {
+                  "previousPassports": {
+                    "type": "array",
+                    "minItems": 1
+                  },
+                  "hasUsedOtherPassports": {
+                    "const": false
+                  }
+                }
+              }
+            },
+            {
+              "not": {
+                "required": [
+                  "violations",
+                  "hasViolations"
+                ],
+                "properties": {
+                  "violations": {
+                    "type": "array",
+                    "minItems": 1
+                  },
+                  "hasViolations": {
+                    "const": false
+                  }
+                }
+              }
+            },
+            {
+              "not": {
+                "allOf": [
+                  {
+                    "required": [
+                      "dateOfBirth"
+                    ],
+                    "properties": {
+                      "dateOfBirth": {
+                        "type": "string",
+                        "pattern": "\\S"
+                      }
+                    }
+                  },
+                  {
+                    "required": [
+                      "yearOfBirth"
+                    ],
+                    "properties": {
+                      "yearOfBirth": {
+                        "type": "integer"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "passport": {
+      "anyOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "string",
+          "pattern": "^\\s*$"
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "number": {
+              "anyOf": [
+                {
+                  "type": "null"
+                },
+                {
+                  "type": "string",
+                  "pattern": "^\\s*$"
+                },
+                {
+                  "type": "string"
+                }
+              ]
+            },
+            "type": {
+              "anyOf": [
+                {
+                  "type": "null"
+                },
+                {
+                  "type": "string",
+                  "pattern": "^\\s*$"
+                },
+                {
+                  "type": "string"
+                }
+              ]
+            },
+            "typeDetails": {
+              "anyOf": [
+                {
+                  "type": "null"
+                },
+                {
+                  "type": "string",
+                  "pattern": "^\\s*$"
+                },
+                {
+                  "type": "string"
+                }
+              ]
+            },
+            "placeOfIssue": {
+              "anyOf": [
+                {
+                  "type": "null"
+                },
+                {
+                  "type": "string",
+                  "pattern": "^\\s*$"
+                },
+                {
+                  "type": "string"
+                }
+              ]
+            },
+            "dateOfIssue": {
+              "anyOf": [
+                {
+                  "type": "null"
+                },
+                {
+                  "type": "string",
+                  "pattern": "^\\s*$"
+                },
+                {
+                  "type": "string",
+                  "pattern": "^\\s*\\d{4}-\\d{2}-\\d{2}\\s*$",
+                  "description": "Trimmed YYYY-MM-DD; actual calendar validity is checked by the runtime validator."
+                }
+              ]
+            },
+            "dateOfExpiry": {
+              "anyOf": [
+                {
+                  "type": "null"
+                },
+                {
+                  "type": "string",
+                  "pattern": "^\\s*$"
+                },
+                {
+                  "type": "string",
+                  "pattern": "^\\s*\\d{4}-\\d{2}-\\d{2}\\s*$",
+                  "description": "Trimmed YYYY-MM-DD; actual calendar validity is checked by the runtime validator."
+                }
+              ]
+            },
+            "hasOtherValidPassports": {
+              "anyOf": [
+                {
+                  "type": "null"
+                },
+                {
+                  "type": "string",
+                  "pattern": "^\\s*$"
+                },
+                {
+                  "type": "boolean"
+                }
+              ]
+            },
+            "otherValidPassports": {
+              "anyOf": [
+                {
+                  "type": "null"
+                },
+                {
+                  "type": "string",
+                  "pattern": "^\\s*$"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                      "type": {
+                        "type": "string",
+                        "pattern": "\\S"
+                      },
+                      "number": {
+                        "type": "string",
+                        "pattern": "\\S"
+                      },
+                      "placeOfIssue": {
+                        "type": "string",
+                        "pattern": "\\S"
+                      },
+                      "dateOfIssue": {
+                        "type": "string",
+                        "pattern": "^\\s*\\d{4}-\\d{2}-\\d{2}\\s*$",
+                        "description": "Trimmed YYYY-MM-DD; actual calendar validity is checked by the runtime validator."
+                      },
+                      "dateOfExpiry": {
+                        "type": "string",
+                        "pattern": "^\\s*\\d{4}-\\d{2}-\\d{2}\\s*$",
+                        "description": "Trimmed YYYY-MM-DD; actual calendar validity is checked by the runtime validator."
+                      },
+                      "typeDetails": {
+                        "anyOf": [
+                          {
+                            "type": "null"
+                          },
+                          {
+                            "type": "string",
+                            "pattern": "^\\s*$"
+                          },
+                          {
+                            "type": "string"
+                          }
+                        ]
+                      }
+                    },
+                    "required": [
+                      "type",
+                      "number",
+                      "placeOfIssue",
+                      "dateOfIssue",
+                      "dateOfExpiry"
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "allOf": [
+            {
+              "not": {
+                "required": [
+                  "otherValidPassports",
+                  "hasOtherValidPassports"
+                ],
+                "properties": {
+                  "otherValidPassports": {
+                    "type": "array",
+                    "minItems": 1
+                  },
+                  "hasOtherValidPassports": {
+                    "const": false
+                  }
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "visa": {
+      "anyOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "string",
+          "pattern": "^\\s*$"
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "entryType": {
+              "anyOf": [
+                {
+                  "type": "null"
+                },
+                {
+                  "type": "string",
+                  "pattern": "^\\s*$"
+                },
+                {
+                  "type": "string"
+                }
+              ]
+            },
+            "validFrom": {
+              "anyOf": [
+                {
+                  "type": "null"
+                },
+                {
+                  "type": "string",
+                  "pattern": "^\\s*$"
+                },
+                {
+                  "type": "string",
+                  "pattern": "^\\s*\\d{4}-\\d{2}-\\d{2}\\s*$",
+                  "description": "Trimmed YYYY-MM-DD; actual calendar validity is checked by the runtime validator."
+                }
+              ]
+            },
+            "validTo": {
+              "anyOf": [
+                {
+                  "type": "null"
+                },
+                {
+                  "type": "string",
+                  "pattern": "^\\s*$"
+                },
+                {
+                  "type": "string",
+                  "pattern": "^\\s*\\d{4}-\\d{2}-\\d{2}\\s*$",
+                  "description": "Trimmed YYYY-MM-DD; actual calendar validity is checked by the runtime validator."
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "contact": {
+      "anyOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "string",
+          "pattern": "^\\s*$"
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "permanentAddress": {
+              "anyOf": [
+                {
+                  "type": "null"
+                },
+                {
+                  "type": "string",
+                  "pattern": "^\\s*$"
+                },
+                {
+                  "type": "string"
+                }
+              ]
+            },
+            "mailingAddress": {
+              "anyOf": [
+                {
+                  "type": "null"
+                },
+                {
+                  "type": "string",
+                  "pattern": "^\\s*$"
+                },
+                {
+                  "type": "string"
+                }
+              ]
+            },
+            "phone": {
+              "anyOf": [
+                {
+                  "type": "null"
+                },
+                {
+                  "type": "string",
+                  "pattern": "^\\s*$"
+                },
+                {
+                  "type": "string"
+                }
+              ]
+            },
+            "emergency": {
+              "anyOf": [
+                {
+                  "type": "null"
+                },
+                {
+                  "type": "string",
+                  "pattern": "^\\s*$"
+                },
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "name": {
+                      "anyOf": [
+                        {
+                          "type": "null"
+                        },
+                        {
+                          "type": "string",
+                          "pattern": "^\\s*$"
+                        },
+                        {
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "phone": {
+                      "anyOf": [
+                        {
+                          "type": "null"
+                        },
+                        {
+                          "type": "string",
+                          "pattern": "^\\s*$"
+                        },
+                        {
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "relationship": {
+                      "anyOf": [
+                        {
+                          "type": "null"
+                        },
+                        {
+                          "type": "string",
+                          "pattern": "^\\s*$"
+                        },
+                        {
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "address": {
+                      "anyOf": [
+                        {
+                          "type": "null"
+                        },
+                        {
+                          "type": "string",
+                          "pattern": "^\\s*$"
+                        },
+                        {
+                          "type": "string"
+                        }
+                      ]
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "occupation": {
+      "anyOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "string",
+          "pattern": "^\\s*$"
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "category": {
+              "anyOf": [
+                {
+                  "type": "null"
+                },
+                {
+                  "type": "string",
+                  "pattern": "^\\s*$"
+                },
+                {
+                  "type": "string"
+                }
+              ]
+            },
+            "description": {
+              "anyOf": [
+                {
+                  "type": "null"
+                },
+                {
+                  "type": "string",
+                  "pattern": "^\\s*$"
+                },
+                {
+                  "type": "string"
+                }
+              ]
+            },
+            "organization": {
+              "anyOf": [
+                {
+                  "type": "null"
+                },
+                {
+                  "type": "string",
+                  "pattern": "^\\s*$"
+                },
+                {
+                  "type": "string"
+                }
+              ]
+            },
+            "position": {
+              "anyOf": [
+                {
+                  "type": "null"
+                },
+                {
+                  "type": "string",
+                  "pattern": "^\\s*$"
+                },
+                {
+                  "type": "string"
+                }
+              ]
+            },
+            "address": {
+              "anyOf": [
+                {
+                  "type": "null"
+                },
+                {
+                  "type": "string",
+                  "pattern": "^\\s*$"
+                },
+                {
+                  "type": "string"
+                }
+              ]
+            },
+            "phone": {
+              "anyOf": [
+                {
+                  "type": "null"
+                },
+                {
+                  "type": "string",
+                  "pattern": "^\\s*$"
+                },
+                {
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "trip": {
+      "anyOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "string",
+          "pattern": "^\\s*$"
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "purpose": {
+              "anyOf": [
+                {
+                  "type": "null"
+                },
+                {
+                  "type": "string",
+                  "pattern": "^\\s*$"
+                },
+                {
+                  "type": "string"
+                }
+              ]
+            },
+            "purposeDetails": {
+              "anyOf": [
+                {
+                  "type": "null"
+                },
+                {
+                  "type": "string",
+                  "pattern": "^\\s*$"
+                },
+                {
+                  "type": "string"
+                }
+              ]
+            },
+            "intendedEntryDate": {
+              "anyOf": [
+                {
+                  "type": "null"
+                },
+                {
+                  "type": "string",
+                  "pattern": "^\\s*$"
+                },
+                {
+                  "type": "string",
+                  "pattern": "^\\s*\\d{4}-\\d{2}-\\d{2}\\s*$",
+                  "description": "Trimmed YYYY-MM-DD; actual calendar validity is checked by the runtime validator."
+                }
+              ]
+            },
+            "durationDays": {
+              "anyOf": [
+                {
+                  "type": "null"
+                },
+                {
+                  "type": "string",
+                  "pattern": "^\\s*$"
+                },
+                {
+                  "type": "integer",
+                  "minimum": 1
+                }
+              ]
+            },
+            "entryCheckpoint": {
+              "anyOf": [
+                {
+                  "type": "null"
+                },
+                {
+                  "type": "string",
+                  "pattern": "^\\s*$"
+                },
+                {
+                  "type": "string"
+                }
+              ]
+            },
+            "exitCheckpoint": {
+              "anyOf": [
+                {
+                  "type": "null"
+                },
+                {
+                  "type": "string",
+                  "pattern": "^\\s*$"
+                },
+                {
+                  "type": "string"
+                }
+              ]
+            },
+            "address": {
+              "anyOf": [
+                {
+                  "type": "null"
+                },
+                {
+                  "type": "string",
+                  "pattern": "^\\s*$"
+                },
+                {
+                  "type": "string"
+                }
+              ]
+            },
+            "province": {
+              "anyOf": [
+                {
+                  "type": "null"
+                },
+                {
+                  "type": "string",
+                  "pattern": "^\\s*$"
+                },
+                {
+                  "type": "string"
+                }
+              ]
+            },
+            "ward": {
+              "anyOf": [
+                {
+                  "type": "null"
+                },
+                {
+                  "type": "string",
+                  "pattern": "^\\s*$"
+                },
+                {
+                  "type": "string"
+                }
+              ]
+            },
+            "phone": {
+              "anyOf": [
+                {
+                  "type": "null"
+                },
+                {
+                  "type": "string",
+                  "pattern": "^\\s*$"
+                },
+                {
+                  "type": "string"
+                }
+              ]
+            },
+            "hasVietnamContacts": {
+              "anyOf": [
+                {
+                  "type": "null"
+                },
+                {
+                  "type": "string",
+                  "pattern": "^\\s*$"
+                },
+                {
+                  "type": "boolean"
+                }
+              ]
+            },
+            "vietnamContacts": {
+              "anyOf": [
+                {
+                  "type": "null"
+                },
+                {
+                  "type": "string",
+                  "pattern": "^\\s*$"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                      "name": {
+                        "type": "string",
+                        "pattern": "\\S"
+                      },
+                      "phone": {
+                        "type": "string",
+                        "pattern": "\\S"
+                      },
+                      "address": {
+                        "type": "string",
+                        "pattern": "\\S"
+                      },
+                      "purpose": {
+                        "type": "string",
+                        "pattern": "\\S"
+                      }
+                    },
+                    "required": [
+                      "name",
+                      "phone",
+                      "address",
+                      "purpose"
+                    ]
+                  }
+                }
+              ]
+            },
+            "hasVisitedWithinLastYear": {
+              "anyOf": [
+                {
+                  "type": "null"
+                },
+                {
+                  "type": "string",
+                  "pattern": "^\\s*$"
+                },
+                {
+                  "type": "boolean"
+                }
+              ]
+            },
+            "previousVisits": {
+              "anyOf": [
+                {
+                  "type": "null"
+                },
+                {
+                  "type": "string",
+                  "pattern": "^\\s*$"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                      "from": {
+                        "type": "string",
+                        "pattern": "^\\s*\\d{4}-\\d{2}-\\d{2}\\s*$",
+                        "description": "Trimmed YYYY-MM-DD; actual calendar validity is checked by the runtime validator."
+                      },
+                      "to": {
+                        "type": "string",
+                        "pattern": "^\\s*\\d{4}-\\d{2}-\\d{2}\\s*$",
+                        "description": "Trimmed YYYY-MM-DD; actual calendar validity is checked by the runtime validator."
+                      },
+                      "purpose": {
+                        "type": "string",
+                        "pattern": "\\S"
+                      }
+                    },
+                    "required": [
+                      "from",
+                      "to",
+                      "purpose"
+                    ]
+                  }
+                }
+              ]
+            },
+            "hasRelativesInVietnam": {
+              "anyOf": [
+                {
+                  "type": "null"
+                },
+                {
+                  "type": "string",
+                  "pattern": "^\\s*$"
+                },
+                {
+                  "type": "boolean"
+                }
+              ]
+            },
+            "relativesInVietnam": {
+              "anyOf": [
+                {
+                  "type": "null"
+                },
+                {
+                  "type": "string",
+                  "pattern": "^\\s*$"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                      "fullName": {
+                        "type": "string",
+                        "pattern": "\\S"
+                      },
+                      "dateOfBirth": {
+                        "type": "string",
+                        "pattern": "^\\s*\\d{4}-\\d{2}-\\d{2}\\s*$",
+                        "description": "Trimmed YYYY-MM-DD; actual calendar validity is checked by the runtime validator."
+                      },
+                      "nationality": {
+                        "type": "string",
+                        "pattern": "\\S"
+                      },
+                      "relationship": {
+                        "type": "string",
+                        "pattern": "\\S"
+                      },
+                      "address": {
+                        "type": "string",
+                        "pattern": "\\S"
+                      }
+                    },
+                    "required": [
+                      "fullName",
+                      "dateOfBirth",
+                      "nationality",
+                      "relationship",
+                      "address"
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "allOf": [
+            {
+              "not": {
+                "required": [
+                  "vietnamContacts",
+                  "hasVietnamContacts"
+                ],
+                "properties": {
+                  "vietnamContacts": {
+                    "type": "array",
+                    "minItems": 1
+                  },
+                  "hasVietnamContacts": {
+                    "const": false
+                  }
+                }
+              }
+            },
+            {
+              "not": {
+                "required": [
+                  "previousVisits",
+                  "hasVisitedWithinLastYear"
+                ],
+                "properties": {
+                  "previousVisits": {
+                    "type": "array",
+                    "minItems": 1
+                  },
+                  "hasVisitedWithinLastYear": {
+                    "const": false
+                  }
+                }
+              }
+            },
+            {
+              "not": {
+                "required": [
+                  "relativesInVietnam",
+                  "hasRelativesInVietnam"
+                ],
+                "properties": {
+                  "relativesInVietnam": {
+                    "type": "array",
+                    "minItems": 1
+                  },
+                  "hasRelativesInVietnam": {
+                    "const": false
+                  }
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "expenses": {
+      "anyOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "string",
+          "pattern": "^\\s*$"
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "estimatedAmount": {
+              "anyOf": [
+                {
+                  "type": "null"
+                },
+                {
+                  "type": "string",
+                  "pattern": "^\\s*$"
+                },
+                {
+                  "type": "number",
+                  "minimum": 0
+                }
+              ]
+            },
+            "hasInsurance": {
+              "anyOf": [
+                {
+                  "type": "null"
+                },
+                {
+                  "type": "string",
+                  "pattern": "^\\s*$"
+                },
+                {
+                  "type": "boolean"
+                }
+              ]
+            },
+            "insuranceDetails": {
+              "anyOf": [
+                {
+                  "type": "null"
+                },
+                {
+                  "type": "string",
+                  "pattern": "^\\s*$"
+                },
+                {
+                  "type": "string"
+                }
+              ]
+            },
+            "payer": {
+              "anyOf": [
+                {
+                  "type": "null"
+                },
+                {
+                  "type": "string",
+                  "pattern": "^\\s*$"
+                },
+                {
+                  "type": "string"
+                }
+              ]
+            },
+            "paymentMethod": {
+              "anyOf": [
+                {
+                  "type": "null"
+                },
+                {
+                  "type": "string",
+                  "pattern": "^\\s*$"
+                },
+                {
+                  "type": "string"
+                }
+              ]
+            },
+            "sponsor": {
+              "anyOf": [
+                {
+                  "type": "null"
+                },
+                {
+                  "type": "string",
+                  "pattern": "^\\s*$"
+                },
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "name": {
+                      "anyOf": [
+                        {
+                          "type": "null"
+                        },
+                        {
+                          "type": "string",
+                          "pattern": "^\\s*$"
+                        },
+                        {
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "address": {
+                      "anyOf": [
+                        {
+                          "type": "null"
+                        },
+                        {
+                          "type": "string",
+                          "pattern": "^\\s*$"
+                        },
+                        {
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "phone": {
+                      "anyOf": [
+                        {
+                          "type": "null"
+                        },
+                        {
+                          "type": "string",
+                          "pattern": "^\\s*$"
+                        },
+                        {
+                          "type": "string"
+                        }
+                      ]
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "allOf": [
+            {
+              "not": {
+                "required": [
+                  "hasInsurance",
+                  "insuranceDetails"
+                ],
+                "properties": {
+                  "hasInsurance": {
+                    "const": false
+                  },
+                  "insuranceDetails": {
+                    "type": "string",
+                    "pattern": "\\S"
+                  }
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "schemaVersion": {
+      "const": 1
+    }
+  },
+  "required": [
+    "schemaVersion"
+  ]
+}
