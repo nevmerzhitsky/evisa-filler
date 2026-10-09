@@ -2,6 +2,8 @@
 import assert from 'node:assert/strict';
 import {createAdapter,isSupportedRoute} from '../extension/content/adapter.js';
 import {createSession,SESSION_PORT} from '../extension/content/session.js';
+import {createSidebarModel} from '../extension/sidebar/model.js';
+import {readCurrentForm} from '../extension/sidebar/form-export.js';
 const PRIVATE='PRIVATE@example.test';
 function fixture({id='basic_ttllSdt',maxLength=50,caption=null}={}){
   const doc={},meta=new WeakMap(),trace=[],abort=new AbortController(),listeners=new Set();let afterSet,onEvent,reads=0,captionReads=0;
@@ -49,6 +51,7 @@ function applicationFixture() {
   const f=fixture({caption:'Phone'}),all=[f.input],listeners=new Map();
   Object.defineProperty(f.Input.prototype,'files',{get(){return f.meta.get(this).files??[];},set(files){f.meta.get(this).files=files;}});
   for (const [id,type,caption] of [['basic_ttcnEmail','text','Email'],['basic_ttcnConfirmEmail','text','Re-enter Email'],
+    ['basic_ttcnTonGiao','text','Religion'],
     ['basic_ttcnNgayThangNamSinhStr','text'],['basic_anhMat','file'],['basic_anhHoChieu','file']]) {
     const input=new f.Input();Object.assign(f.meta.get(input),{id,type,files:[]});
     if(type==='file') {
@@ -81,6 +84,34 @@ test('saved application URL with fictitious query supports actual native DOM wri
   assert.equal(f.adapter.probe(f.ctx).supported,true);
   await f.adapter.writeField('contact.phone','Saved application phone',f.ctx);
   assert.equal((await f.adapter.readField('contact.phone',f.ctx)).value,'Saved application phone');
+});
+
+test('saved edit form without confirmation accepts filling and exports its disabled email',async()=>{
+  const f=applicationFixture();
+  f.window.location.href='https://evisa.gov.vn/e-visa/foreigners/E261009TEST123?email=example%40example.invalid';
+  f.all.splice(f.all.findIndex(node=>node.id==='basic_ttcnConfirmEmail'),1);
+  const email=f.all.find(node=>node.id==='basic_ttcnEmail');
+  Object.assign(f.meta.get(email),{disabled:true,value:'example@example.invalid'});
+  assert.equal(f.adapter.probe(f.ctx).supported,true);
+  await f.adapter.writeField('contact.phone','Saved form phone',f.ctx);
+  assert.equal((await f.adapter.readField('contact.phone',f.ctx)).value,'Saved form phone');
+  assert.deepEqual(await f.adapter.readExportField('personal.email',f.ctx),{available:true,value:'example@example.invalid'});
+  await assert.rejects(f.adapter.writeField('personal.email','other@example.invalid',f.ctx),{code:'unavailable'});
+  assert.equal(f.meta.get(email).value,'example@example.invalid');
+});
+
+test('saved edit signature still rejects wrong language, duplicate anchors and incomplete forms',()=>{
+  for(const change of ['base','language','duplicate','photo']){
+    const f=applicationFixture();
+    f.window.location.href='https://evisa.gov.vn/e-visa/foreigners/fake_saved-123';
+    f.all.splice(f.all.findIndex(node=>node.id==='basic_ttcnConfirmEmail'),1);
+    const religion=f.all.find(node=>node.id==='basic_ttcnTonGiao');
+    if(change==='base')f.window.location.href='https://evisa.gov.vn/e-visa/foreigners';
+    if(change==='language')f.meta.get(f.meta.get(religion).labels[0]).text='Tôn giáo';
+    if(change==='duplicate')f.all.push(religion);
+    if(change==='photo')f.all.splice(f.all.findIndex(node=>node.id==='basic_anhMat'),1);
+    assert.equal(f.adapter.probe(f.ctx).supported,false,change);
+  }
 });
 test('English signature requires unique native inputs and actual known labels, independently of html lang',()=>{
   const f=applicationFixture();assert.equal(f.adapter.probe(f.ctx).supported,true);
@@ -117,6 +148,32 @@ test('conditional scalar binding and address autocomplete use actual native disp
 });
 function event(){const listeners=new Set();return {addListener:fn=>listeners.add(fn),removeListener:fn=>listeners.delete(fn),fire:value=>{for(const fn of [...listeners])fn(value);}};}
 async function until(predicate){for(let i=0;i<100;i++){if(predicate())return;await new Promise(resolve=>setTimeout(resolve,5));}assert.fail('Session timed out');}
+
+test('sidebar refuses filling but exports a saved edit form through the real session and adapter',async t=>{
+  const f=applicationFixture(),runtime={id:'extension',getURL:path=>`moz-extension://test/${path}`,onConnect:event()};
+  f.window.location.href='https://evisa.gov.vn/e-visa/foreigners/fake_saved-123?email=example%40example.invalid';
+  f.all.splice(f.all.findIndex(node=>node.id==='basic_ttcnConfirmEmail'),1);
+  Object.assign(f.meta.get(f.all.find(node=>node.id==='basic_ttcnEmail')),{disabled:true,value:'example@example.invalid'});
+  const session=createSession({runtime,window:f.window,document:f.doc,adapter:f.adapter,uuid:()=> 'saved-doc'});
+  t.after(()=>session.dispose());
+  const browser={tabs:{query:async()=>[{id:7,url:f.window.location.href}],connect(){
+    const sidebar={onMessage:event(),onDisconnect:event()};
+    const content={name:SESSION_PORT,sender:{id:runtime.id,url:runtime.getURL('sidebar/sidebar.html')},onMessage:event(),onDisconnect:event()};
+    sidebar.postMessage=message=>content.onMessage.fire(message);
+    content.postMessage=message=>sidebar.onMessage.fire(message);
+    sidebar.disconnect=()=>{content.onDisconnect.fire();sidebar.onDisconnect.fire();};
+    runtime.onConnect.fire(content);return sidebar;
+  }}};
+  const model=createSidebarModel({browser,uuid:()=> 'saved-run'});
+  t.after(()=>model.clear());
+  await model.selectFile('json',{name:'saved.json',text:async()=>JSON.stringify({schemaVersion:1,contact:{phone:'Saved phone'}})});
+  assert.equal(await model.start(),false);
+  assert.equal(f.trace.length,0);
+  const snapshot=await readCurrentForm(browser,{requestId:'saved-export'});
+  assert.equal(snapshot.data.contact.phone,'old');
+  assert.equal(snapshot.data.personal.email,'example@example.invalid');
+  assert.equal(Object.hasOwn(snapshot.data.personal,'confirmEmail'),false);
+});
 test('real session port drives actual adapter native writes, supports second run and cancels active wait',async t=>{
   const f=applicationFixture(),runtime={id:'extension',getURL:path=>`moz-extension://test/${path}`,onConnect:event()};
   let serial=0;const session=createSession({runtime,window:f.window,document:f.doc,adapter:f.adapter,uuid:()=>`doc-${++serial}`});t.after(()=>session.dispose());

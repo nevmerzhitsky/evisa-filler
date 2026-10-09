@@ -13,12 +13,12 @@ function fixture(options={}){
   return {model,port,connections,text,setTab(value){tab=value;},get queries(){return queries;},timeout(){timer?.();},probe(){port.onMessage.emit({type:'probe',runId:model.snapshot().runId,documentId:'document-1',supported:true});}};
 }
 const imageValidation=async source=>({ok:true,image:{name:source.name,type:'image/png',bytes:new ArrayBuffer(10240)},errors:[]});
-test('saved form URL starts the existing topframe probe and omits query from target metadata',async()=>{
+test('saved form URL refuses filling without connecting to the page',async()=>{
   const f=fixture();f.setTab({id:7,url:'https://evisa.gov.vn/e-visa/foreigners/fake_saved-123?email=example%40example.invalid#section'});
-  await f.model.selectFile('json',f.text());assert.equal(await f.model.start(),true);
-  assert.deepEqual(f.connections,[{id:7,settings:{name:'evisa-filler',frameId:0}}]);
-  assert.equal(f.port.sent.at(-1).type,'probe');f.probe();assert.equal(f.port.sent.at(-1).type,'start');
-  assert.equal(f.model.snapshot().target.url,'https://evisa.gov.vn/e-visa/foreigners/fake_saved-123');
+  await f.model.selectFile('json',f.text());assert.equal(await f.model.start(),false);
+  assert.deepEqual(f.connections,[]);
+  assert.equal(f.model.snapshot().notice,'Сохранённая заявка доступна только для сохранения в JSON.');
+  assert.equal(f.model.snapshot().target,null);
 });
 test('photos-only accepted, invalid JSON still blocks images, bad image permits valid text',async()=>{
   const f=fixture({validateImage:imageValidation});

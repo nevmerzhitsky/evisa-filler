@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "E-visa filler",
-  "version": "0.1.18",
+  "version": "0.1.20",
   "browser_specific_settings": {"gecko": {"id": "evisa-filler@local"}},
   "description": "Локальное заполнение личной английской формы evisa.gov.vn",
   "permissions": ["activeTab", "downloads"],

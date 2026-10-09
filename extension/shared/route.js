@@ -1,6 +1,11 @@
-export function isPersonalFormUrl(value) {
+export function personalFormMode(value) {
   try {
     const url=value instanceof URL?value:new URL(value);
-    return url.origin==='https://evisa.gov.vn' && /^\/e-visa\/foreigners(?:\/[A-Za-z0-9_-]+)?\/?$/.test(url.pathname);
-  } catch {return false;}
+    if(url.origin!=='https://evisa.gov.vn')return null;
+    if(/^\/e-visa\/foreigners\/?$/.test(url.pathname))return 'new';
+    if(/^\/e-visa\/foreigners\/[A-Za-z0-9_-]+\/?$/.test(url.pathname))return 'saved';
+    return null;
+  } catch {return null;}
 }
+
+export const isPersonalFormUrl=value=>personalFormMode(value)!==null;

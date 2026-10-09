@@ -39,7 +39,7 @@ export function isSupportedRoute(window, document = window.document) {
 
 // These labels were observed on the English form even when <html lang> was not
 // English. Native identities also prevent duplicate IDs from passing the probe.
-function formSignature(document, complete = true) {
+function formSignature(window, document, complete = true) {
   try {
     const realm = document.defaultView;
     const getter = (proto, name) => Object.getOwnPropertyDescriptor(proto, name)?.get;
@@ -57,7 +57,14 @@ function formSignature(document, complete = true) {
       const node = unique(key);
       return node instanceof realm.HTMLInputElement && node.ownerDocument === document && node.isConnected && type.call(node) === expectedType ? node : null;
     };
-    for (const [key, caption] of [['basic_ttcnEmail','Email'], ['basic_ttcnConfirmEmail','Re-enter Email']]) {
+    // EDIT omits confirmation entirely. Keep a translated English anchor in
+    // that case: the literal Email caption is the same in other languages.
+    const saved = /^\/e-visa\/foreigners\/[A-Za-z0-9_-]+\/?$/.test(new URL(window.location.href).pathname);
+    const confirmationAbsent = !all.some(node => id.call(node) === 'basic_ttcnConfirmEmail');
+    const secondLabel = saved && confirmationAbsent
+      ? ['basic_ttcnTonGiao','Religion']
+      : ['basic_ttcnConfirmEmail','Re-enter Email'];
+    for (const [key, caption] of [['basic_ttcnEmail','Email'], secondLabel]) {
       const input = native(key, 'text');
       if (!input || input.getClientRects().length === 0) return false;
       const associated = [...labels.call(input)];
@@ -77,7 +84,7 @@ export function createAdapter({window, document = window.document}) {
       if (ctx?.signal?.aborted) throw fail('cancelled');
       try {if (typeof ctx?.assertCurrent !== 'function' || ctx.assertCurrent() === false) throw fail('document_lost');}
       catch {throw fail(ctx?.signal?.aborted ? 'cancelled' : 'document_lost');}
-      if (!isSupportedRoute(window, document) || !formSignature(document,false)) throw fail('document_lost');
+      if (!isSupportedRoute(window, document) || !formSignature(window,document,false)) throw fail('document_lost');
     };
     assertCurrent();
     return {...ctx, document, assertCurrent};
@@ -127,7 +134,7 @@ export function createAdapter({window, document = window.document}) {
     probe(ctx) {
       if (ctx?.signal?.aborted) throw fail('cancelled');
       ctx?.assertCurrent?.();
-      return {supported:isSupportedRoute(window,document) && formSignature(document)};
+      return {supported:isSupportedRoute(window,document) && formSignature(window,document)};
     },
     readField: (path,ctx) => access(path,undefined,ctx,false),
     readExportField(path,ctx) {

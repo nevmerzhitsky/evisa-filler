@@ -1,7 +1,7 @@
 import {validateApplication} from '../shared/validator.js';
 import {validateImage as checkImage} from '../shared/images.js';
 import {FIELDS} from '../shared/contract.js';
-import {isPersonalFormUrl} from '../shared/route.js';
+import {personalFormMode} from '../shared/route.js';
 
 export function createSidebarModel({browser,parseJSON=validateApplication,validateImage=checkImage,
   render=()=>{},uuid=()=>crypto.randomUUID(),probeTimeoutMs=10000,setTimer=setTimeout,clearTimer=clearTimeout}) {
@@ -70,7 +70,7 @@ export function createSidebarModel({browser,parseJSON=validateApplication,valida
       const [tab]=await browser.tabs.query({active:true,currentWindow:true});
       if(epoch!==generation||!busy())return false;
       const url=new URL(tab?.url??'');
-      if(!Number.isInteger(tab?.id)||!isPersonalFormUrl(url)){fail('Откройте английскую личную форму https://evisa.gov.vn/e-visa/foreigners');return false;}
+      if(!Number.isInteger(tab?.id)||personalFormMode(url)!=='new'){fail(personalFormMode(url)==='saved'?'Сохранённая заявка доступна только для сохранения в JSON.':'Откройте английскую личную форму https://evisa.gov.vn/e-visa/foreigners');return false;}
       target={tabId:tab.id,url:`${url.origin}${url.pathname}`};
       if(stopRequested){state='cancelled';notice='Запуск остановлен до заполнения';emit();return false;}
       port=browser.tabs.connect(tab.id,{name:'evisa-filler',frameId:0});port.onMessage.addListener(message);port.onDisconnect.addListener(disconnected);

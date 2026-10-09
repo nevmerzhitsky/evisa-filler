@@ -2,6 +2,7 @@ import {createSidebarModel} from './model.js';
 import {groupResults} from './result-groups.js';
 import {actionState} from './action-state.js';
 import {readCurrentForm,saveFormJSON} from './form-export.js';
+import {watchPageMode} from './page-mode.js';
 const element=id=>document.getElementById(id);
 const labels={empty:'Нет данных',invalid:'Ошибка данных',ready:'Готово',running:'Заполнение',paused:'Пауза',completed:'Завершено',cancelled:'Остановлено',failed:'Ошибка'};
 const statuses={filled:'Заполнено',unchanged:'Без изменений',skipped_empty:'Пустое значение пропущено',skipped_dependency:'Пропущено из-за зависимости',error:'Ошибка',changed_by_site:'Изменено сайтом'};
@@ -68,6 +69,13 @@ function render(view){
   }
 }
 const model=createSidebarModel({browser:globalThis.browser,render});
+const fillHelp=element('help-text').textContent;
+const stopWatching=watchPageMode(globalThis.browser,mode=>{
+  const saved=mode==='saved';
+  element('fill-panel').hidden=saved;
+  element('panel-title').textContent=saved?'Сохранение e-Visa':'Заполнение e-Visa';
+  element('help-text').textContent=saved?'Нажмите «Сохранить форму в JSON», чтобы сохранить текущие значения сохранённой заявки в локальный файл.':fillHelp;
+});
 for(const role of ['json','portrait','passport'])element(role).addEventListener('change',()=>model.selectFile(role,element(role).files[0]??null));
 for(const action of ['start','stop','resume','clear'])element(action).addEventListener('click',()=>model[action]());
 element('export').addEventListener('click',async()=>{
@@ -96,7 +104,7 @@ element('export').addEventListener('click',async()=>{
   }finally {exportBusy=false;render(model.snapshot());}
 });
 element('close').addEventListener('click',()=>{
-  const failed=()=>{element('state').textContent='Не удалось закрыть панель. Используйте кнопку закрытия Firefox.';};
+  const failed=()=>{element(element('fill-panel').hidden?'export-status':'state').textContent='Не удалось закрыть панель. Используйте кнопку закрытия Firefox.';};
   try{const closing=globalThis.browser.sidebarAction.close();Promise.resolve(closing).catch(failed);}catch{failed();}
 });
-window.addEventListener('pagehide',()=>model.dispose(),{once:true});
+window.addEventListener('pagehide',()=>{stopWatching();model.dispose();},{once:true});
